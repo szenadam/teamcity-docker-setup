@@ -1,3 +1,7 @@
+# Further info about the server and agent containers:
+# https://hub.docker.com/r/jetbrains/teamcity-server/
+# https://hub.docker.com/r/jetbrains/teamcity-agent/
+
 version: "3"
 services:
   server:
@@ -16,11 +20,11 @@ services:
     environment:
       - SERVER_URL=http://server:8111
       - AGENT_NAME=regular_agent
-      - DOCKER_IN_DOCKER=start
+      - DOCKER_IN_DOCKER=start # Needed to run builds in a docker container
     volumes:
       - ./teamcityagent.conf:/data/teamcity_agent/conf
       - ./docker_volumes:/var/lib/docker
-    privileged: true
+    privileged: true # Needed to run builds in a docker container
     restart: always
   teamcity-minimal-agent:
     image: jetbrains/teamcity-minimal-agent
